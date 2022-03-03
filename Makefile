@@ -36,6 +36,9 @@ all:  $(NAME)
 $(NAME): $(OBJ_FILES)
 	ar rcs $(NAME) $(OBJ_FILES)
 
+test:
+	gcc main.c -g ft*.c && ./a.out
+
 clean:
 	rm -rf $(OBJ_FILES)
 
