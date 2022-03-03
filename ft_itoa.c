@@ -1,29 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: steh <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 19:30:50 by steh              #+#    #+#             */
-/*   Updated: 2021/12/02 19:31:47 by steh             ###   ########.fr       */
+/*   Created: 2021/12/01 14:37:00 by steh              #+#    #+#             */
+/*   Updated: 2021/12/01 17:02:18 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t num)
+size_t	get_len(int n)
 {
 	size_t	len;
 
+	if (n == 0)
+		return (1);
 	len = 0;
-	if (num == 0)
-		return (0);
-	while (*s1 && *s2 && *s1 == *s2 && len < num - 1)
+	if (n < 0)
+		len++;
+	while (n)
 	{
-		s1++;
-		s2++;
+		n /= 10;
 		len++;
 	}
-	return ((*(unsigned char *)s1) - (*(unsigned char *)s2));
+	return (len);
+}
+
+char	*ft_itoa(int n)
+{
+	int		len;
+	char	*str;
+	long	nb;
+
+	len = get_len(n);
+	nb = n;
+	str = (char *)malloc(sizeof(char) * len + 1);
+	if (str == NULL)
+		return (NULL);
+	if (nb < 0)
+	{
+		str[0] = '-';
+		nb = -nb;
+	}
+	if (nb == 0)
+		str[0] = '0';
+	str[len--] = '\0';
+	while (nb)
+	{
+		str[len] = nb % 10 + '0';
+		len--;
+		nb = nb / 10;
+	}
+	return (str);
 }
